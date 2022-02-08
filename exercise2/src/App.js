@@ -25,12 +25,20 @@ class App extends React.Component {
       addItems = (desc, unit) => {
         let amount = Math.floor(Math.random() * (11-1) + 1);
 
-        let newItems = [...this.state.items, { 
-          id: this.state.items.length + 1, 
-          value: desc, 
-          qty: amount, 
-          unit: unit
-        }];
+        let newItems = [...this.state.items];
+        let oldItemIndex = newItems.findIndex(i => i.value == desc);
+        if(oldItemIndex != -1){
+          let newElement = { ...newItems[oldItemIndex] };
+          newElement.qty += amount;
+          newItems[oldItemIndex] = newElement;
+        }else{
+          newItems = [...this.state.items, { 
+            id: this.state.items.length + 1, 
+            value: desc, 
+            qty: amount, 
+            unit: unit
+          }]
+        }
         this.setState({items: newItems});
     }
 
