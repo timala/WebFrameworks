@@ -3,6 +3,7 @@ import Title from './components/Title';
 import ShoppingList from './components/ShoppingList';
 import styles from './App.module.css';
 import './App.css';
+import Buttons from './components/Buttons';
 
 /* A ES6 class style stateful component for the shopping list application */
 class App extends React.Component {
@@ -51,10 +52,7 @@ class App extends React.Component {
         applicationName={ applicationName }
       />
       <ShoppingList items={ this.state.items } />
-      <button onClick={ () => this.addItems('Carrots', 'pcs') }>Add carrots</button>
-      <button onClick={ () => this.addItems('Strawberries', 'kg') }>Add strawberries</button>
-      <button onClick={ () => this.addItems('Yogurt', 'ltr') }>Add yogurt</button>
-      <button onClick={ () => this.addItems('Beer', 'x') }>Add beer</button>
+      <Buttons onAddClick={ this.addItems } />
     </div>
   }
 }
