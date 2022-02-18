@@ -9,7 +9,7 @@ import image5 from './components/kuva5.png';
 import image6 from './components/kuva6.png';
 
 function App() {
-  const [products, setProducts] = useState([
+  const products = [
     {
       id: 1, 
       productImage: image1,
@@ -52,18 +52,28 @@ function App() {
       price: 9.99,
       shipping: 14.97
     },
-  ]);
+  ];
 
-  const search = () => {
-    console.log("clicked");
+  const [searchParam, setSearchParam] = useState("");
+  const [productListing, setProducts] = useState(products);
+
+  const handleSearchChange = (event) => {
+    setSearchParam(event.target.value);
+    if(event.target.value == ""){
+      console.log("Tyhjä")
+      setProducts(products);
+    }else{
+      console.log(event.target.value);
+      let foundProducts = products.filter(el => el.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1)
+      setProducts(foundProducts);
+    }
   }
 
   return (
     <div> 
-      <input type="text" placeholder='Search' />
-      <button onClick={ () => search() }>Search</button>     
+      <input type="text" placeholder='Search' value={ searchParam } onChange={ handleSearchChange } />   
       <div className='productContainer'>
-        { products.map( p => <Products name={ p.name } image={ p.productImage } price={ p.price } shipping={ p.shipping } /> ) }  
+        { productListing.map( p => <Products name={ p.name } image={ p.productImage } price={ p.price } shipping={ p.shipping } /> ) }  
       </div>
     </div>
   );
