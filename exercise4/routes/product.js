@@ -20,10 +20,10 @@ const products = [
     },
     {
         "id": 3,
-        "name": "phone3",
-        "manufacturer": "Company ABC",
-        "category": "phones",
-        "description": "3. best phone ever",
+        "name": "computer",
+        "manufacturer": "Phonefirm",
+        "category": "computers",
+        "description": "Best computer ever",
         "price": 8000
     },
 ];
@@ -65,13 +65,14 @@ router.put('/:productId', (req, res) => {
 });
 
 router.get('/search/:searchParam', (req, res) => {
-    let newProducts = [];
+    let foundProducts = [];
     
-    products.map(p => {
-        let foundIndex = products.findIndex(p => p.name === req.params.searchParam)
-        newProducts.push(products[foundIndex]);
-    })
-    res.json(newProducts);
+    foundProducts = products.filter(el => el.name.toLowerCase().indexOf(req.params.searchParam.toLowerCase()) !== -1 || 
+        el.manufacturer.toLowerCase().indexOf(req.params.searchParam.toLowerCase()) !== -1 ||
+        el.category.toLowerCase().indexOf(req.params.searchParam.toLowerCase()) !== -1
+        );
+
+    res.json(foundProducts);
 })
 
 module.exports = router;

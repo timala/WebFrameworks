@@ -12,8 +12,14 @@ const invoice = [
 ];
 
 router.post('/', (req, res) => {
-    //bought products
-    //total sum
+    invoice.push(
+        {
+            id: 34,
+            userId: req.body.userId,
+            products: [req.body.products],
+            sum: req.body.sum
+        },
+    )
 })
 
 router.get('/:userId', (req, res) => {

@@ -4,7 +4,7 @@ const products = require ('./routes/product');
 const user = require ('./routes/user');
 const invoice = require ('./routes/invoice');
 
-app.use('/products', products);
+app.use('/', products);
 app.use('/user', user);
 app.use('/invoice', invoice);
 
