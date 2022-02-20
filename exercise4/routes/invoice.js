@@ -3,17 +3,21 @@ const { post } = require('./user');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 
-const invoice = [
+const invoices = [
     {
         id: uuidv4(),
-        userId: 1,
+        userId: "23",
         products: [],
         sum: 0
     },
 ];
 
+router.get('/', (req,res) => {
+    res.json(invoices);
+})
+
 router.post('/', (req, res) => {
-    invoice.push(
+    invoices.push(
         {
             id: uuidv4(),
             userId: req.body.userId,
@@ -21,28 +25,26 @@ router.post('/', (req, res) => {
             sum: req.body.sum
         },
     )
+    res.sendStatus(201);
 })
 
-router.get('/:userId', (req, res) => {
+router.get('/userinvoices/:userId', (req, res) => {
     let userInvoices = [];
-    invoice.map(i => {
-        let foundIndex = invoice.findIndex(i.userId === req.params.userId)
-        userInvoices.push(invoice[foundIndex])
-})
+    userInvoices = invoices.filter(i => i.userId.indexOf(req.params.userId) !== -1);
     res.json(userInvoices);
 })
 
 router.get('/:invoiceId', (req,res) => {
-    let foundIndex = invoice.map(i => i.id === req.params.invoiceId)
-    res.send(invoice[foundIndex]);
+    let foundIndex = invoices.findIndex(i => i.id == req.params.invoiceId);
+    res.json(invoices[foundIndex]);
 })
 
 router.delete('/:invoiceId', (req, res) => {
-    let foundIndex = invoice.findIndex(i => i.id === req.params.invoiceId);
+    let foundIndex = invoices.findIndex(i => i.id === req.params.invoiceId);
     if(foundIndex === -1){
         res.sendStatus(404);
     }else{
-        invoice.splice(foundIndex, 1);
+        invoices.splice(foundIndex, 1);
         res.sendStatus(202);
     }
 })
