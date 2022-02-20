@@ -9,4 +9,4 @@ export default function Products(props){
             <div>${ props.shipping } shipping</div>
         </div>
     )
-        }
+}
