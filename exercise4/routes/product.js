@@ -1,9 +1,10 @@
 const express = require ('express');
 const router = express.Router();
+const { v4: uuidv4 } = require('uuid');
 
 const products = [
     {
-        "id": 1,
+        "id": uuidv4(),
         "name": "phone",
         "manufacturer": "Company A",
         "category": "phones",
@@ -11,7 +12,7 @@ const products = [
         "price": 12000
     },
     {
-        "id": 2,
+        "id": uuidv4(),
         "name": "phone2",
         "manufacturer": "Company AB",
         "category": "phones",
@@ -19,7 +20,7 @@ const products = [
         "price": 10000
     },
     {
-        "id": 3,
+        "id": uuidv4(),
         "name": "computer",
         "manufacturer": "Phonefirm",
         "category": "computers",
@@ -39,7 +40,7 @@ router.get('/:productId', (req,res) => {
 
 router.post('/', (req, res) => {
     products.push({
-        id: 3,
+        id: uuidv4(),
         name: req.body.name,
         manufacturer: req.body.manufacturer,
         category: req.body.category,
@@ -50,7 +51,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:productId', (req, res) => {
-    let foundProduct = products.find(p => p.id === req.params.productId);
+    let foundProduct = products.find(p => p.id == req.params.productId);
     if(foundProduct){
         foundProduct.name = req.body.name;
         foundProduct.manufacturer = req.body.manufacturer;

@@ -1,10 +1,11 @@
 const express = require ('express');
 const { post } = require('./user');
 const router = express.Router();
+const { v4: uuidv4 } = require('uuid');
 
 const invoice = [
     {
-        id: 1,
+        id: uuidv4(),
         userId: 1,
         products: [],
         sum: 0
@@ -14,9 +15,9 @@ const invoice = [
 router.post('/', (req, res) => {
     invoice.push(
         {
-            id: 34,
+            id: uuidv4(),
             userId: req.body.userId,
-            products: [req.body.products],
+            products: req.body.products,
             sum: req.body.sum
         },
     )

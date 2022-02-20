@@ -1,9 +1,10 @@
 const express = require ('express');
 const router = express.Router();
+const { v4: uuidv4 } = require('uuid');
 
 const users = 
 [{
-   id: 1,
+   id: uuidv4(),
    firstName: "Maija",
    lastName: "Meikäläinen",
    address: "Jokutie 65, 87212 Kaupunki",
@@ -12,6 +13,7 @@ const users =
 
 router.post('/', (req, res) => {
     users.push({
+        id: uuidv4(),
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         address: req.body.address,
