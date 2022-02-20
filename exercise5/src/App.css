@@ -1,0 +1,18 @@
+.productContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 15px 50px 15px 50px;
+}
+
+.product {
+  width: 30%;
+  border-bottom: 3px gray solid;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+img {
+  width: 60%;
+  max-height: 60%;
+}
