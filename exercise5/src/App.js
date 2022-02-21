@@ -1,30 +1,61 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Products from './components/Products';
+import EditorView from './components/EditorView';
 
 function App() {
   const [searchParam, setSearchParam] = useState("");
-  const [productListing, setProducts] = useState(products);
+  const [productListing, setProducts] = useState([]);
+  useEffect(() => {
+    const getData = async() => {
+      const results = await axios.get('http://localhost:3001/product');
+      setProducts(results.data);
+    }
+    getData();
+  }, []);
 
-  const handleSearchChange = (event) => {
+  const onItemDelete = (item) => {
+    let newProducts = [...productListing];
+    let deletedItemIndex = newProducts.findIndex(p => p.id === item.id);
+    newProducts.splice(deletedItemIndex, 1);
+    setProducts(newProducts);
+  }
+
+  const [EditorModeOn, setEditorModeOn] = useState(false);
+  let output = <Products products={ productListing } />
+  if(EditorModeOn == true){
+    output = <EditorView products={ productListing } onItemDelete={ onItemDelete } />
+  }
+
+/*   const handleSearchChange = (event) => {
     setSearchParam(event.target.value);
     if(event.target.value == ""){
-      console.log("Tyhjä")
-      setProducts(products);
+      useEffect(() => {
+        const getData = async() => {
+          const results = await axios.get('http://localhost:3001/product');
+          setProducts(results.data);
+        }
+        getData();
+      }, []);
     }else{
-      console.log(event.target.value);
-      let foundProducts = products.filter(el => el.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1)
-      setProducts(foundProducts);
+      useEffect(() => {
+        const getData = async() => {
+          const results = await axios.get('http://localhost:3001/product');
+          let foundProducts = results.data.filter(el => el.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1)
+          setProducts(foundProducts);
+        }
+        getData();
+      }, []);
     }
-  }
+  } */
 
   return (
     <div> 
-      <input type="text" placeholder='Search' value={ searchParam } onChange={ handleSearchChange } />   
-      <div className='productContainer'>
-        { productListing.map( p => <Products name={ p.name } image={ p.productImage } price={ p.price } shipping={ p.shipping } /> ) }  
+{/*       <input type="text" placeholder='Search' value={ searchParam } onChange={ handleSearchChange } /> */}
+      <button onClick={ () => setEditorModeOn (!EditorModeOn) }>Admin mode toggle</button>
+        { output }
       </div>
-    </div>
   );
 }
 
