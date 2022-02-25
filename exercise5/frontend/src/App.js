@@ -31,11 +31,13 @@ function App() {
     getData();
   }
 
-  const onItemDelete = (item) => {
-    let newProducts = [...productListing];
-    let deletedItemIndex = newProducts.findIndex(p => p.id === item.id);
-    newProducts.splice(deletedItemIndex, 1);
-    setProducts(newProducts);
+  const onItemDelete = async(id) => {
+    await axios.delete(`http://localhost:3001/product/${id}`);
+    const getData = async() => {
+      const results = await axios.get('http://localhost:3001/product');
+      setProducts(results.data);
+    }
+    getData();
   }
 
   const [EditorModeOn, setEditorModeOn] = useState(false);

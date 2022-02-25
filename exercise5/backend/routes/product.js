@@ -50,6 +50,12 @@ router.post('/', (req, res) => {
     res.sendStatus(201);
 });
 
+router.delete('/:productId', (req, res) => {
+    let deletedItemIndex = products.findIndex(p => p.id === req.params.productId);
+    products.splice(deletedItemIndex, 1);
+    res.sendStatus(202);
+})
+
 router.put('/:productId', (req, res) => {
     let foundProduct = products.find(p => p.id == req.params.productId);
     if(foundProduct){

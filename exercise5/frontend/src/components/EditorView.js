@@ -34,7 +34,7 @@ export default function EditorView(props){
                 <button type="button" onClick={ () => props.onAddClick({name, manufacturer, category, description, price}) }>Add product</button>
             </form>
             {props.products.map(p => <div>{p.name} 
-            <button onClick={ () => props.onItemDelete(p) }>DELETE</button>
+            <button onClick={ () => props.onItemDelete(p.id) }>DELETE</button>
             </div> 
             )}
         </div>
