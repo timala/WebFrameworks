@@ -1,12 +1,13 @@
 import './App.css';
 import { useState } from 'react';
 import Products from './components/Products';
-import image1 from './components/kuva.png';
-import image2 from './components/kuva2.png';
-import image3 from './components/kuva3.png';
-import image4 from './components/kuva4.png';
-import image5 from './components/kuva5.png';
-import image6 from './components/kuva6.png';
+import image1 from './components/pictures/kuva.png';
+import image2 from './components/pictures/kuva2.png';
+import image3 from './components/pictures/kuva3.png';
+import image4 from './components/pictures/kuva4.png';
+import image5 from './components/pictures/kuva5.png';
+import image6 from './components/pictures/kuva6.png';
+import Search from './components/Search';
 
 function App() {
   const products = [
@@ -54,27 +55,21 @@ function App() {
     },
   ];
 
-  const [searchParam, setSearchParam] = useState("");
   const [productListing, setProducts] = useState(products);
 
-  const handleSearchChange = (event) => {
-    setSearchParam(event.target.value);
-    if(event.target.value == ""){
-      console.log("Tyhjä")
+  const search = (param) => {
+    if(param === ""){
       setProducts(products);
     }else{
-      console.log(event.target.value);
-      let foundProducts = products.filter(el => el.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1)
+      let foundProducts = products.filter(el => el.name.toLowerCase().indexOf(param.toLowerCase()) !== -1)
       setProducts(foundProducts);
     }
   }
 
   return (
     <div> 
-      <input type="text" placeholder='Search' value={ searchParam } onChange={ handleSearchChange } />   
-      <div className='productContainer'>
-        { productListing.map( p => <Products name={ p.name } image={ p.productImage } price={ p.price } shipping={ p.shipping } /> ) }  
-      </div>
+      <Search search={ search } />   
+      <Products products={ productListing } /> )
     </div>
   );
 }
