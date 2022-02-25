@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Products from './components/Products';
 import EditorView from './components/EditorView';
+import Search from './components/Search';
 
 function App() {
-  //const [searchParam, setSearchParam] = useState("");
   const [productListing, setProducts] = useState([]);
 
   useEffect(() => {
@@ -46,32 +46,26 @@ function App() {
     output = <EditorView products={ productListing } onAddClick={ onAddClick } onItemDelete={ onItemDelete } />
   }
 
-/*   const handleSearchChange = (event) => {
-    setSearchParam(event.target.value);
-    if(event.target.value == ""){
-      useEffect(() => {
+  const search = (param) => {
+    if(param == ""){
         const getData = async() => {
-          const results = await axios.get('http://localhost:3001/product');
+          const results = await axios.get(`http://localhost:3001/product`);
           setProducts(results.data);
         }
         getData();
-      }, []);
-    }else{
-      useEffect(() => {
+      }else{
         const getData = async() => {
-          const results = await axios.get('http://localhost:3001/product');
-          let foundProducts = results.data.filter(el => el.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1)
-          setProducts(foundProducts);
+          const results = await axios.get(`http://localhost:3001/product/search/${param}`);
+          setProducts(results.data);
         }
         getData();
-      }, []);
+      }
     }
-  } */
 
   return (
-    <div> 
-{/*       <input type="text" placeholder='Search' value={ searchParam } onChange={ handleSearchChange } /> */}
+    <div>  
       <button onClick={ () => setEditorModeOn (!EditorModeOn) }>Admin mode toggle</button>
+      <Search search={ search } />
         { output }
       </div>
   );
