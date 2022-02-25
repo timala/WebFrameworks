@@ -5,8 +5,9 @@ import Products from './components/Products';
 import EditorView from './components/EditorView';
 
 function App() {
-  const [searchParam, setSearchParam] = useState("");
+  //const [searchParam, setSearchParam] = useState("");
   const [productListing, setProducts] = useState([]);
+
   useEffect(() => {
     const getData = async() => {
       const results = await axios.get('http://localhost:3001/product');
@@ -14,6 +15,21 @@ function App() {
     }
     getData();
   }, []);
+
+  const onAddClick = async(item) => {
+    await axios.post('http://localhost:3001/product', {
+      name: item.name,
+      manufacturer: item.manufacturer,
+      category: item.category,
+      description: item.description,
+      price: item.price
+    })
+    const getData = async() => {
+      const results = await axios.get('http://localhost:3001/product');
+      setProducts(results.data);
+    }
+    getData();
+  }
 
   const onItemDelete = (item) => {
     let newProducts = [...productListing];
@@ -24,8 +40,8 @@ function App() {
 
   const [EditorModeOn, setEditorModeOn] = useState(false);
   let output = <Products products={ productListing } />
-  if(EditorModeOn == true){
-    output = <EditorView products={ productListing } onItemDelete={ onItemDelete } />
+  if(EditorModeOn === true){
+    output = <EditorView products={ productListing } onAddClick={ onAddClick } onItemDelete={ onItemDelete } />
   }
 
 /*   const handleSearchChange = (event) => {
