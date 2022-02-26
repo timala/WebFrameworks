@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 const products = [
     {
         "id": uuidv4(),
+        "img": "https://dummyjson.com/image/i/products/2/1.jpg",
         "name": "phone",
         "manufacturer": "Company A",
         "category": "phones",
@@ -13,6 +14,7 @@ const products = [
     },
     {
         "id": uuidv4(),
+        "img": "https://dummyjson.com/image/i/products/3/1.jpg",
         "name": "phone2",
         "manufacturer": "Company AB",
         "category": "phones",
@@ -21,6 +23,7 @@ const products = [
     },
     {
         "id": uuidv4(),
+        "img": "https://dummyjson.com/image/i/products/10/1.jpg",
         "name": "computer",
         "manufacturer": "Phonefirm",
         "category": "computers",
@@ -41,6 +44,7 @@ router.get('/:productId', (req,res) => {
 router.post('/', (req, res) => {
     products.push({
         id: uuidv4(),
+        img: req.body.img,
         name: req.body.name,
         manufacturer: req.body.manufacturer,
         category: req.body.category,

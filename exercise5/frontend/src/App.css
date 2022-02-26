@@ -17,6 +17,10 @@ img {
   max-height: 60%;
 }
 
+input {
+  width: 30%;
+}
+
 form {
   margin: 10px 0px 10px 0px;
 }
